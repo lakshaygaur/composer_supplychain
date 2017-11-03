@@ -1,0 +1,61 @@
+/**
+ * My commodity network.
+ */
+namespace org.acme.mynetwork
+
+participant Manufacturer identified by manId {
+  o String manId  
+}
+
+participant Warehouse identified by warId {
+  o String warId  
+}
+
+asset Unit identified by unitId {
+  o String unitId
+  o String cartonId
+  o String manufacturerId
+  o String dateOfDeparture
+  o String recipient
+  o Trackrecord[] trackrecord
+  o String currentOwner
+  o String status  
+}
+
+asset Carton identified by cartonId {
+o String cartonId
+o String manufacturerId
+o String dateOfDeparture optional
+o String recipient optional 
+o String currentOwner
+o String status 
+--> Unit[] units optional
+o Trackrecord[] trackrecord optional 
+}
+
+transaction Send {
+  --> Carton carton
+  o String recp
+}
+
+transaction MakeCarton {
+  --> Unit[] unit
+  o String Id
+}
+
+concept Trackrecord {
+o String ownerId
+o String timeStamp
+}
+
+transaction UpdateStatusWarehouse {
+--> Carton carton
+}
+
+/**
+event SampleEvent {
+  --> SampleAsset asset
+  o String oldValue
+  o String newValue
+}
+*/
